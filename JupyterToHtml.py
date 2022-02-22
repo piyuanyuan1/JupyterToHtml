@@ -162,5 +162,5 @@ def main(file, target, config):
 
 if __name__ == '__main__':
 	main(file = "F:/JupyterNotebooks/客户聚类分析.ipynb", 	# 源文件
-		 target= 'test', 									# 生成的html文件名（不带后缀，默认保存在桌面）
-		 config = style_config) 							# 配置
+		 target= 'test', 				# 生成的html文件名（不带后缀，默认保存在桌面）
+		 config = style_config) 				 # 配置
