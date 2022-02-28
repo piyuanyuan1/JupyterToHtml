@@ -74,7 +74,7 @@ def decode_output(outputs):
 # 生成CSS代码
 def css_generate(config):
 	# 页面CSS
-	page_style = 'body {' + 'width: {};'.format(config['page_with']) + '}\n'
+	page_style = 'body {-webkit-print-color-adjust: exact;' + 'width: {};'.format(config['page_with']) + '}\n'
 
 	# 代码CSS
 	code_style = '.highlight {'+'font-size:{fs}; padding-left: 10px; margin: 10px;border: {bw} solid #000;border-radius: {br};'.format(
