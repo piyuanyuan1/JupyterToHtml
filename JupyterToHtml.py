@@ -12,7 +12,7 @@ style_config = {
 	'page_with' : '90%', 							# 页面宽度 1%~100%
 
 	# 代码块
-	'code_base_style': 'xcode', 				# pygments代码高亮预设: xcode、monokai、trac、rainbow_dash、perldoc、vim、rrt、autumn、lovelace
+	'code_base_style': 'monokai',#'', 			# pygments代码高亮预设: xcode、monokai、trac、rainbow_dash、perldoc、vim、rrt、autumn、lovelace
 	'code_font_size' : '12pt',						# 字体大小
 	'code_font-family' : 'monaco',					# 字体名称
 	'code_borer_radius' : '2px',					# 边框圆角半径
@@ -20,8 +20,8 @@ style_config = {
 	'code_line-height' : '1.5',						# 行高
 	
 	# 文本输出
-	'output_color' : '#424242',						# 字体颜色
-	'output_font_size' : '12pt',					# 字体大小
+	'output_color' : '#000',						# 字体颜色
+	'output_font_size' : '11pt',					# 字体大小
 	'output_font_family' : 'monaco',				# 字体名称
 
 	# 表格
@@ -31,7 +31,12 @@ style_config = {
 	'table_border' : 'none', 						# 边框，默认无边框：1px solid #000
 	'table_background_color_odd' : '#fff', 			# 奇数行背景颜色
 	'table_background_color_even' : '#eee', 		# 偶数行背景颜色
-	'table_align' : 'left',						# 表格在页面中的水平位置：center、left
+	'table_align' : 'left',	# 表格在页面中的水平位置：center、left
+
+	'table_head_background_color' : '#ccc',
+	'table_head_font_size' : '10pt', 				
+	'table_head_font_family' : 'arial', 				
+	'table_head_color' : '#000',
 
 	# 图片
 	'img_align' : 'left',							# 表格在页面中的水平位置：center、left
@@ -93,12 +98,17 @@ def css_generate(config):
 
 	# 表格CSS
 	table_style ='table {'+'margin-left:10px; border:{}; border-collapse:collapse;'.format(config['table_border'])+'}\n' \
-				+ 'table tr {'+'background-color:{bc}; font-size:{fs}; color: {fc}; font-family:{ff};'.format(
+				+ 'table tbody tr {'+'background-color:{bc}; font-size:{fs}; color: {fc}; font-family:{ff};'.format(
 					bc = config['table_background_color_odd'],
 					fs = config['table_font_size'],
 					fc = config['table_color'],
 					ff = config['table_font_family'])+'}\n'\
-				+ 'table tr:nth-child(even) {'+'background-color:{};'.format(config['table_background_color_even'])+'}\n' \
+				+ 'table tbody tr:nth-child(even) {'+'background-color:{};'.format(config['table_background_color_even'])+'}\n' \
+				+ 'thead {' + 'background-color:{bc}; font-size:{fs}; color: {fc}; font-family:{ff};'.format(
+					bc = config['table_head_background_color'],
+					fs = config['table_head_font_size'],
+					fc = config['table_head_color'],
+					ff = config['table_head_font_family']) + '}\n'\
 				+ 'table tr th {'+'font-weight:bold;padding:5px 15px 5px 15px; border:{};'.format(config['table_border'])+'}\n'\
 				+ 'table tr td {'+'padding:5px 15px 5px 15px;text-align: right; border:{};'.format(config['table_border'])+'}\n' \
 				+ '.tebleContainer {' \
@@ -161,6 +171,6 @@ def main(file, target, config):
 		f.write(html_template.format(CSS, HTML))
 
 if __name__ == '__main__':
-	main(file = "F:/JupyterNotebooks/客户聚类分析.ipynb", 	# 源文件
-		 target= 'test', 				# 生成的html文件名（不带后缀，默认保存在桌面）
-		 config = style_config) 				 # 配置
+	main(file = "F:/JupyterNotebooks/kaggle/tabular-playground-series-mar-2022/main.ipynb", 	# 源文件
+		 target= 'test', 									# 生成的html文件名（不带后缀，默认保存在桌面）
+		 config = style_config) 							# 配置
