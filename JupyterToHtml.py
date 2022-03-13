@@ -13,7 +13,7 @@ style_config = {
 
 	# 代码块
 	'code_base_style': 'monokai',#'', 			# pygments代码高亮预设: xcode、monokai、trac、rainbow_dash、perldoc、vim、rrt、autumn、lovelace
-	'code_font_size' : '12pt',						# 字体大小
+	'code_font_size' : '10pt',						# 字体大小
 	'code_font-family' : 'monaco',					# 字体名称
 	'code_borer_radius' : '2px',					# 边框圆角半径
 	'code_borer_with' : '1px',						# 边框宽度
@@ -21,7 +21,7 @@ style_config = {
 	
 	# 文本输出
 	'output_color' : '#000',						# 字体颜色
-	'output_font_size' : '11pt',					# 字体大小
+	'output_font_size' : '9pt',					# 字体大小
 	'output_font_family' : 'monaco',				# 字体名称
 
 	# 表格
@@ -51,7 +51,7 @@ def decode_output(outputs):
 
 	# 以下依次是图片、表格、纯文本的处理函数
 	out_format = {
-		'image/png' : lambda x: out.append('<div class = "image"><img src="data:image/png;base64,{}"></div>'.format(x)),
+		'image/png' : lambda x: out.append('<div class = "image"><img  style = "max-width: 100%;" src="data:image/png;base64,{}"></div>'.format(x)),
 		'text/html' : lambda x: out.append('<div class = "tebleContainer">{}</div>'.format(''.join(x))),
 		'text/plain' : lambda x: out.append('<pre class = "plaintext">{}</pre>'.format(''.join(x)))
 	}
@@ -91,7 +91,7 @@ def css_generate(config):
 			   		lh = config['code_line-height'])+'}\n'
 
 	# 纯文本CSS
-	output_style = '.plaintext {'+'font-size:{fs}; font-family:{ff}; padding-left:20px;color:{fc};'.format(
+	output_style = '.plaintext {white-space: pre-wrap;word-break: break-word;'+'font-size:{fs}; font-family:{ff}; padding-left:20px;color:{fc};'.format(
 					fs = config['output_font_size'],
 					ff = config['output_font_family'],
 					fc = config['output_color'])+'}\n'
@@ -111,15 +111,18 @@ def css_generate(config):
 					ff = config['table_head_font_family']) + '}\n'\
 				+ 'table tr th {'+'font-weight:bold;padding:5px 15px 5px 15px; border:{};'.format(config['table_border'])+'}\n'\
 				+ 'table tr td {'+'padding:5px 15px 5px 15px;text-align: right; border:{};'.format(config['table_border'])+'}\n' \
-				+ '.tebleContainer {' \
+				+ '.tebleContainer {overflow-x: auto; overflow-y: auto;' \
 				+ ('width:fit-content; margin:auto;' if  config['table_align'] == 'center' else '') \
 				+ '}\n'
 
 	# 图片CSS
-	img_style = '.image {'+ ('margin-left:20px;text-align:{};'.format(config['img_align']) if config['img_align'] != 'center' else 'text-align:center') +'}\n'
+	img_style = '.image {'\
+				+ ('margin-left:20px;text-align:{};'.format(config['img_align']) if config['img_align'] != 'center' else 'text-align:center')\
+				+'}\n'
 
 	# markdown CSS
-	markdown_style =  '.markdown{'+ 'font-family:\"{}\"'.format(config['markdown_font_family']) + '}\n'
+	markdown_style =  '.markdown{'+ 'font-family:\"{}\"'.format(config['markdown_font_family']) + '}\n' \
+				    + '.markdown pre{white-space: pre-wrap;word-break: break-word;}\n'
 
 	css = HtmlFormatter(style = config['code_base_style']).get_style_defs('.highlight') + '\n' \
 		+ page_style \
